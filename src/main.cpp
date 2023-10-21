@@ -32,6 +32,7 @@ int main() {
 	int buffer_index = 0;
 	buffer = &buffer0;
 
+	constexpr auto skip_frame = false;
 
 	while (!frame.empty()) {
 		buffer = buffer_index ? &buffer0 : &buffer1;
@@ -40,6 +41,8 @@ int main() {
 		ConsolePicture::Convert(frame, *buffer);
 		video >> frame;
 		cv::waitKey(1);
+
+		if (skip_frame && buffer_index == 1) continue;
 
 		std::string content;
 		content = buffer[0].str();
